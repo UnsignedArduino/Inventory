@@ -17,60 +17,6 @@ let stuff: Inventory.Item[] = [
         . . . 2 2 e e 4 4 4 2 e e . . .
         . . . . . 2 2 e e e e . . . . .
     `, "A fresh apple picked from the orchird."),
-    new Inventory.Item("Apple", img`
-        . . . . . . . e c 7 . . . . . .
-        . . . . e e e c 7 7 e e . . . .
-        . . c e e e e c 7 e 2 2 e e . .
-        . c e e e e e c 6 e e 2 2 2 e .
-        . c e e e 2 e c c 2 4 5 4 2 e .
-        c e e e 2 2 2 2 2 2 4 5 5 2 2 e
-        c e e 2 2 2 2 2 2 2 2 4 4 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 4 2 e
-        . e e e 2 2 2 2 2 2 2 2 2 4 e .
-        . 2 e e 2 2 2 2 2 2 2 2 4 2 e .
-        . . 2 e e 2 2 2 2 2 4 4 2 e . .
-        . . . 2 2 e e 4 4 4 2 e e . . .
-        . . . . . 2 2 e e e e . . . . .
-    `, "A fresh apple picked from the orchird."),
-    new Inventory.Item("Apple", img`
-        . . . . . . . e c 7 . . . . . .
-        . . . . e e e c 7 7 e e . . . .
-        . . c e e e e c 7 e 2 2 e e . .
-        . c e e e e e c 6 e e 2 2 2 e .
-        . c e e e 2 e c c 2 4 5 4 2 e .
-        c e e e 2 2 2 2 2 2 4 5 5 2 2 e
-        c e e 2 2 2 2 2 2 2 2 4 4 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
-        c e e 2 2 2 2 2 2 2 2 2 2 4 2 e
-        . e e e 2 2 2 2 2 2 2 2 2 4 e .
-        . 2 e e 2 2 2 2 2 2 2 2 4 2 e .
-        . . 2 e e 2 2 2 2 2 4 4 2 e . .
-        . . . 2 2 e e 4 4 4 2 e e . . .
-        . . . . . 2 2 e e e e . . . . .
-    `, "A fresh apple picked from the orchird."),
-    new Inventory.Item("Pizza", img`
-        . . . . . . b b b b . . . . . .
-        . . . . . . b 4 4 4 b . . . . .
-        . . . . . . b b 4 4 4 b . . . .
-        . . . . . b 4 b b b 4 4 b . . .
-        . . . . b d 5 5 5 4 b 4 4 b . .
-        . . . . b 3 2 3 5 5 4 e 4 4 b .
-        . . . b d 2 2 2 5 7 5 4 e 4 4 e
-        . . . b 5 3 2 3 5 5 5 5 e e e e
-        . . b d 7 5 5 5 3 2 3 5 5 e e e
-        . . b 5 5 5 5 5 2 2 2 5 5 d e e
-        . b 3 2 3 5 7 5 3 2 3 5 d d e 4
-        . b 2 2 2 5 5 5 5 5 5 d d e 4 .
-        b d 3 2 d 5 5 5 d d d 4 4 . . .
-        b 5 5 5 5 d d 4 4 4 4 . . . . .
-        4 d d d 4 4 4 . . . . . . . . .
-        4 4 4 4 . . . . . . . . . . . .
-    `, "Some fresh baked pizza."),
     new Inventory.Item("Pizza", img`
         . . . . . . b b b b . . . . . .
         . . . . . . b 4 4 4 b . . . . .
@@ -109,5 +55,13 @@ let stuff: Inventory.Item[] = [
     `, "A freshly prepared burger hot off the grill.")
 ];
 spriteutils.setConsoleOverlay(true);
-console.log(stuff[5].name);
-console.log(stuff[5].description);
+
+let tb = new Inventory.Toolbar(stuff, 5);
+tb.left = 2;
+tb.bottom = scene.screenHeight() - 2;
+while (true) {
+    for (let i = 0; i < tb.max_items; i++) {
+        tb.selected = i;
+        pause(500);
+    }
+}

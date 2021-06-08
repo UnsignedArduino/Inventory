@@ -1,4 +1,4 @@
-enum ColorAttribute {
+enum ToolbarColorAttribute {
     //% block="box outline"
     BoxOutline,
     //% block="box selected outline"
@@ -107,15 +107,15 @@ namespace Inventory {
 
         /**
          * Set a specific part of the toolbar to a specific color.
-         * @param attribute: A property of the ColorAttribute enum.
+         * @param attribute: A property of the ToolbarColorAttribute enum.
          * @param color: A number which should be the new color of the attribute.
          */
-        public set_color(attribute: ColorAttribute, color: number) {
-            if (attribute == ColorAttribute.BoxOutline) {
+        public set_color(attribute: ToolbarColorAttribute, color: number) {
+            if (attribute == ToolbarColorAttribute.BoxOutline) {
                 this._box_outline_color = color;
-            } else if (attribute == ColorAttribute.BoxSelectedOutline) {
+            } else if (attribute == ToolbarColorAttribute.BoxSelectedOutline) {
                 this._box_selected_outline_color = color;
-            } else if (attribute == ColorAttribute.BoxBackground) {
+            } else if (attribute == ToolbarColorAttribute.BoxBackground) {
                 this._box_background_color = color;
             }
             this.update();
@@ -123,15 +123,15 @@ namespace Inventory {
 
         /**
          * Get the color of a specific part of the toolbar.
-         * @param attribute: A property of the ColorAttribute enum.
+         * @param attribute: A property of the ToolbarColorAttribute enum.
          * @return: The  color (which is a number) of the attribute, otherwise -1. 
          */
-        public get_color(attribute: ColorAttribute) {
-            if (attribute == ColorAttribute.BoxOutline) {
+        public get_color(attribute: ToolbarColorAttribute) {
+            if (attribute == ToolbarColorAttribute.BoxOutline) {
                 return this._box_outline_color;
-            } else if (attribute == ColorAttribute.BoxSelectedOutline) {
+            } else if (attribute == ToolbarColorAttribute.BoxSelectedOutline) {
                 return this._box_selected_outline_color;
-            } else if (attribute == ColorAttribute.BoxBackground) {
+            } else if (attribute == ToolbarColorAttribute.BoxBackground) {
                 return this._box_background_color;
             }
             return -1;
@@ -141,7 +141,40 @@ namespace Inventory {
          * Update the image of the toolbar.
          */
         protected update() {
-            // TODO: Implement
+            let image_size: number = 16;
+            let padding: number = 2;
+            let box_size: number = image_size + (padding * 2);
+            let new_image = image.create(
+                ((box_size + 2) * this.max_items) - padding, 
+                box_size
+            )
+            for (let index = 0; index < this.max_items; index++) {
+                if (index > this.max_items - 1) {
+                    return;
+                }
+                new_image.fillRect(
+                    (box_size + padding) * index, 
+                    0, 
+                    box_size, 
+                    box_size, 
+                    this._box_background_color
+                )
+                if (index < this.items.length) {
+                    spriteutils.drawTransparentImage(
+                        this.items[index].image, new_image, 
+                        ((box_size + padding) * index) + 2, 2
+                    )
+                }
+                new_image.drawRect(
+                    (box_size + padding) * index, 
+                    0, 
+                    box_size, 
+                    box_size, 
+                    index == this.selected ? this._box_selected_outline_color : this._box_outline_color
+                )
+
+            }
+            this.setImage(new_image);
         }
     }
 }
