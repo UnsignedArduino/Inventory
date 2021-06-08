@@ -1,3 +1,12 @@
+enum ColorAttribute {
+    //% block="box outline"
+    BoxOutline,
+    //% block="box selected outline"
+    BoxSelectedOutline,
+    //% block="box background"
+    BoxBackground
+}
+
 namespace Inventory {
     /**
      * Create a simple item which holds a single image and some text. 
@@ -7,9 +16,9 @@ namespace Inventory {
         /**
          * Define variables that are part of the class. 
          */
-        name: string;
-        image: Image;
-        description: string;
+        public name: string;
+        public image: Image;
+        public description: string;
 
         /**
          * Make a simple item.
@@ -22,6 +31,117 @@ namespace Inventory {
             this.name = name;
             this.image = image;
             this.description = description;
+        }
+    }
+
+    /**
+     * Create a toolbar sprite which is just a regular sprite.
+     */
+    export class Toolbar extends Sprite {
+        /**
+         * Define (extra) variables that are part of the class.
+         */
+        private _items: Item[];
+        private _selected: number = 0;
+        private _max_items: number;
+        private _box_outline_color: number = 12;
+        private _box_selected_outline_color: number = 5;
+        private _box_background_color: number = 13;
+
+        /**
+         * Make a toolbar.
+         */
+        constructor(items: Item[] = [], max_items: number) {
+            super(img`
+                .
+            `)
+            this._items = items;
+            this._max_items = max_items;
+            this.update();
+        }
+
+        /**
+         * Get the selected item.
+         */
+        public get selected() {
+            return this._selected;
+        }
+
+        /**
+         * Set the selected item.
+         */
+        public set selected(index: number) {
+            this._selected = index;
+            this.update();
+        }
+
+        /**
+         * Get the items in the toolbar.
+         */
+        public get items() {
+            return this._items;
+        }
+
+        /**
+         * Set the items in the toolbar.
+         */
+        public set items(new_items: Item[]) {
+            this._items = new_items;
+            this.update();
+        }
+
+        /**
+         * Get the maximum amount of items in the toolbar.
+         */
+        public get max_items() {
+            return this._max_items;
+        }
+
+        /**
+         * Set the maximum amount of items in the toolbar.
+         */
+        public set max_items(new_max: number) {
+            this._max_items = new_max;
+            this.update();
+        }
+
+        /**
+         * Set a specific part of the toolbar to a specific color.
+         * @param attribute: A property of the ColorAttribute enum.
+         * @param color: A number which should be the new color of the attribute.
+         */
+        public set_color(attribute: ColorAttribute, color: number) {
+            if (attribute == ColorAttribute.BoxOutline) {
+                this._box_outline_color = color;
+            } else if (attribute == ColorAttribute.BoxSelectedOutline) {
+                this._box_selected_outline_color = color;
+            } else if (attribute == ColorAttribute.BoxBackground) {
+                this._box_background_color = color;
+            }
+            this.update();
+        }
+
+        /**
+         * Get the color of a specific part of the toolbar.
+         * @param attribute: A property of the ColorAttribute enum.
+         * @return: The  color (which is a number) of the attribute, otherwise -1. 
+         */
+        public get_color(attribute: ColorAttribute) {
+            if (attribute == ColorAttribute.BoxOutline) {
+                return this._box_outline_color;
+            } else if (attribute == ColorAttribute.BoxSelectedOutline) {
+                return this._box_selected_outline_color;
+            } else if (attribute == ColorAttribute.BoxBackground) {
+                return this._box_background_color;
+            }
+            return -1;
+        }
+
+        /**
+         * Update the image of the toolbar.
+         */
+        protected update() {
+            // TODO: Implement
         }
     }
 }
