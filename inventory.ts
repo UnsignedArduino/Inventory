@@ -1,20 +1,20 @@
 enum ToolbarColorAttribute {
-    //% block="box outline"
+    //% block="outline"
     BoxOutline,
-    //% block="box selected outline"
+    //% block="selected outline"
     BoxSelectedOutline,
-    //% block="box background"
+    //% block="background"
     BoxBackground
 }
 
 enum InventoryColorAttribute {
-    //% block="inventory outline"
+    //% block="outline"
     InventoryOutline,
-    //% block="inventory selected outline"
+    //% block="selected outline"
     InventorySelectedOutline,
-    //% block="inventory background"
+    //% block="background"
     InventoryBackground,
-    //% block="inventory text"
+    //% block="text"
     InventoryText
 }
 
@@ -72,7 +72,7 @@ namespace Inventory {
          * @param attribute: A property of the ItemTextAttribute enum.
          * @param value: The new text of the item.
          */
-        //% block="%Inventory(Item) set text of %attribute to %value"
+        //% block="item %Inventory(Item) set %attribute to %value"
         //% weight=20
         //% group="Item"
         //% hidden
@@ -88,7 +88,7 @@ namespace Inventory {
          * Get the name of description of the item.
          * @return: The text.
          */
-        //% block="%Inventory(Item) get text of %attribute"
+        //% block="item %Inventory(Item) get %attribute"
         //% weight=10
         //% group="Item"
         //% hidden
@@ -105,7 +105,7 @@ namespace Inventory {
          * Set the image of the item.
          * @param new_image: The new image.
          */
-        //% block="%Inventory(Item) set image to %new_image"
+        //% block="item %Inventory(Item) set image to %new_image"
         //% new_image.shadow=screen_image_picker
         //% weight=40
         //% group="Item"
@@ -118,7 +118,7 @@ namespace Inventory {
          * Get the image of the item.
          * @return: The image.
          */
-        //% block="%Inventory(Item) get image"
+        //% block="item %Inventory(Item) get image"
         //% weight=30
         //% group="Item"
         //% hidden
@@ -196,7 +196,7 @@ namespace Inventory {
          * Get the items in the toolbar. Only rewrapped for blocks.
          * @return: The items, as an array of Item.
          */
-        //% block="%Inventory(toolbar) get items"
+        //% block="toolbar %Inventory(toolbar) get items"
         //% weight=80
         //% group="Toolbar"
         //% hidden
@@ -215,7 +215,7 @@ namespace Inventory {
         /**
          * Set the items in the toolbar. Only rewrapped for blocks.
          */
-        //% block="%Inventory(toolbar) set items to %new_items"
+        //% block="toolbar %Inventory(toolbar) set items to %new_items"
         //% new_items.shadow="lists_create_with"
         //% weight=90
         //% group="Toolbar"
@@ -244,7 +244,7 @@ namespace Inventory {
          * @attribute: A property of the ToolbarNumberAttribute enum.
          * @value: The new value.
          */
-        //% block="%Inventory(toolbar) set %attribute to %value"
+        //% block="toolbar %Inventory(toolbar) set %attribute to %value"
         //% weight=70
         //% group="Toolbar"
         //% hidden
@@ -261,7 +261,7 @@ namespace Inventory {
          * @attribute: A property of the ToolbarNumberAttribute enum.
          * @return: A number. 
          */
-        //% block="%Inventory(toolbar) get %attribute"
+        //% block="toolbar %Inventory(toolbar) get %attribute"
         //% weight=60
         //% group="Toolbar"
         //% hidden
@@ -279,7 +279,7 @@ namespace Inventory {
          * @param attribute: A property of the ToolbarColorAttribute enum.
          * @param color: A number which should be the new color of the attribute.
          */
-        //% block="%Inventory(toolbar) set color of %attribute to %color"
+        //% block="toolbar %Inventory(toolbar) set color of %attribute to %color"
         //% color.shadow=colorindexpicker
         //% weight=50
         //% group="Toolbar"
@@ -299,7 +299,7 @@ namespace Inventory {
          * @param attribute: A property of the ToolbarColorAttribute enum.
          * @return: The color (which is a number) of the attribute, otherwise -1. 
          */
-        //% block="%Inventory(toolbar) get color of %attribute"
+        //% block="toolbar %Inventory(toolbar) get color of %attribute"
         //% weight=40
         //% group="Toolbar"
         public get_color(attribute: ToolbarColorAttribute) {
@@ -316,7 +316,7 @@ namespace Inventory {
         /**
          * Update the image of the toolbar.
          */
-        //% block="%Inventory(toolbar) force redraw of toolbar"
+        //% block="toolbar %Inventory(toolbar) force redraw"
         //% weight=30
         public update() {
             let image_size: number = 16;
@@ -425,7 +425,7 @@ namespace Inventory {
          * Get the items in the inventory. Only rewrapped for blocks.
          * @return: The items - as an array of Item. 
          */
-        //% block="%Inventory(inventory) get items"
+        //% block="inventory %Inventory(inventory) get items"
         //% weight=80
         //% group="Inventory"
         //% hidden
@@ -445,7 +445,7 @@ namespace Inventory {
          * Set the items in the inventory. Only rewrapped for blocks.
          * @new_items: A list of Item.
          */
-        //% block="%Inventory(inventory) set items to %new_items"
+        //% block="inventory %Inventory(inventory) set items to %new_items"
         //% new_items.shadow="lists_create_with"
         //% weight=90
         //% group="Inventory"
@@ -474,7 +474,7 @@ namespace Inventory {
          * @attribute: A property of the InventoryNumberAttribute enum.
          * @value: The new number.
          */
-        //% block="%Inventory(inventory) set %attribute to %value"
+        //% block="inventory %Inventory(inventory) set %attribute to %value"
         //% weight=70
         //% group="Inventory"
         //% hidden
@@ -491,7 +491,7 @@ namespace Inventory {
          * @attribute: A property of the InventoryNumberAttribute enum.
          * @return: The number. 
          */
-        //% block="%Inventory(inventory) get %attribute"
+        //% block="inventory %Inventory(inventory) get %attribute"
         //% weight=60
         //% group="Inventory"
         //% hidden
@@ -515,7 +515,7 @@ namespace Inventory {
          * Get the text in the inventory. Only rewrapped for blocks.
          * @return: A string. 
          */
-        //% block="%Inventory(inventory) get text"
+        //% block="inventory %Inventory(inventory) get text"
         //% weight=40
         //% group="Inventory"
         //% hidden
@@ -535,7 +535,7 @@ namespace Inventory {
          * Set the text in the inventory. Only rewrapped for blocks.
          * @new_text: The new text. 
          */
-        //% block="%Inventory(inventory) set text to %new_text"
+        //% block="inventory %Inventory(inventory) set text to %new_text"
         //% weight=50
         //% group="Inventory"
         //% hidden
@@ -548,7 +548,7 @@ namespace Inventory {
          * @param attribute: A property of the InventoryColorAttribute enum.
          * @param color: A number which should be the new color of the attribute.
          */
-        //% block="%Inventory(inventory) set color of %attribute to %color"
+        //% block="inventory %Inventory(inventory) set color of %attribute to %color"
         //% color.shadow=colorindexpicker
         //% weight=30
         //% group="Inventory"
@@ -570,7 +570,7 @@ namespace Inventory {
          * @param attribute: A property of the InventoryColorAttribute enum.
          * @return: The color (which is a number) of the attribute, otherwise -1. 
          */
-        //% block="%Inventory(inventory) get color of %attribute"
+        //% block="inventory %Inventory(inventory) get color of %attribute"
         //% weight=20
         //% group="Inventory"
         public get_color(attribute: InventoryColorAttribute) {
@@ -589,7 +589,7 @@ namespace Inventory {
         /**
          * Update the image of the inventory.
          */
-        //% block="%Inventory(Inventory) force redraw of inventory"
+        //% block="inventory %Inventory(Inventory) force redraw"
         //% weight=10
         //% group="Inventory"
         public update() {
