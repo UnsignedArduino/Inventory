@@ -56,12 +56,6 @@ let stuff: Inventory.Item[] = [
 ];
 spriteutils.setConsoleOverlay(true);
 
-let tb = new Inventory.Toolbar(stuff, 5);
-tb.left = 2;
-tb.bottom = scene.screenHeight() - 2;
-while (true) {
-    for (let i = 0; i < tb.max_items; i++) {
-        tb.selected = i;
-        pause(500);
-    }
-}
+let inv = new Inventory.Inventory(stuff, 16);
+inv.left = 2;
+inv.top = 2;

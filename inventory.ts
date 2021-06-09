@@ -7,6 +7,17 @@ enum ToolbarColorAttribute {
     BoxBackground
 }
 
+enum InventoryColorAttribute {
+    //% block="inventory outline"
+    InventoryOutline,
+    //% block="inventory selected outline"
+    InventorySelectedOutline,
+    //% block="inventory background"
+    InventoryBackground,
+    //% block="inventory text"
+    InventoryText
+}
+
 namespace Inventory {
     /**
      * Create a simple item which holds a single image and some text. 
@@ -175,6 +186,138 @@ namespace Inventory {
 
             }
             this.setImage(new_image);
+        }
+    }
+
+    /**
+     * Create an inventory sprite which is just a regular sprite.
+     */
+    export class Inventory extends Sprite {
+        /**
+         * Define (extra) variables that are part of the class.
+         */
+        private _items: Item[];
+        private _selected: number = 0;
+        private _max_items: number;
+        private _text: string = "Inventory";
+        private _inv_outline_color: number = 12;
+        private _inv_selected_outline_color: number = 5;
+        private _inv_background_color: number = 13;
+        private _inv_text_color: number = 12;
+
+        /**
+         * Make an inventory.
+         */
+        constructor(items: Item[] = [], max_items: number) {
+            super(img`
+                .
+            `)
+            this._items = items;
+            this._max_items = max_items;
+            this.update();
+        }
+
+        /**
+         * Get the selected item.
+         */
+        public get selected() {
+            return this._selected;
+        }
+
+        /**
+         * Set the selected item.
+         */
+        public set selected(index: number) {
+            this._selected = index;
+            this.update();
+        }
+
+        /**
+         * Get the items in the inventory.
+         */
+        public get items() {
+            return this._items;
+        }
+
+        /**
+         * Set the items in the inventory.
+         */
+        public set items(new_items: Item[]) {
+            this._items = new_items;
+            this.update();
+        }
+
+        /**
+         * Get the maximum amount of items in the inventory.
+         */
+        public get max_items() {
+            return this._max_items;
+        }
+
+        /**
+         * Set the maximum amount of items in the inventory.
+         */
+        public set max_items(new_max: number) {
+            this._max_items = new_max;
+            this.update();
+        }
+        
+        /**
+         * Get the text in the inventory.
+         */
+        public get text() {
+            return this._text;
+        }
+
+        /**
+         * Set the text in the inventory.
+         */
+        public set text(new_text: string) {
+            this._text = new_text;
+            this.update();
+        }
+
+        /**
+         * Set a specific part of the inventory to a specific color.
+         * @param attribute: A property of the InventoryColorAttribute enum.
+         * @param color: A number which should be the new color of the attribute.
+         */
+        public set_color(attribute: InventoryColorAttribute, color: number) {
+            if (attribute == InventoryColorAttribute.InventoryOutline) {
+                this._inv_outline_color = color;
+            } else if (attribute == InventoryColorAttribute.InventorySelectedOutline) {
+                this._inv_selected_outline_color = color;
+            } else if (attribute == InventoryColorAttribute.InventoryBackground) {
+                this._inv_background_color = color;
+            } else if (attribute == InventoryColorAttribute.InventoryText) {
+                this._inv_text_color = color;
+            }
+            this.update();
+        }
+
+        /**
+         * Get the color of a specific part of the inventory.
+         * @param attribute: A property of the InventoryColorAttribute enum.
+         * @return: The  color (which is a number) of the attribute, otherwise -1. 
+         */
+        public get_color(attribute: InventoryColorAttribute) {
+            if (attribute == InventoryColorAttribute.InventoryOutline) {
+                return this._inv_outline_color;
+            } else if (attribute == InventoryColorAttribute.InventorySelectedOutline) {
+                return this._inv_selected_outline_color;
+            } else if (attribute == InventoryColorAttribute.InventoryBackground) {
+                return this._inv_background_color;
+            } else if (attribute == InventoryColorAttribute.InventoryText) {
+                return this._inv_text_color;
+            }
+            return -1;
+        }
+
+        /**
+         * Update the image of the inventory.
+         */
+        protected update() {
+            // TODO: Implement
         }
     }
 }
