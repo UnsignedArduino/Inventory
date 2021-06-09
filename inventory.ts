@@ -603,6 +603,12 @@ namespace Inventory {
             new_image.fill(this._inv_background_color);
             new_image.drawRect(0, 0, width, height, this._inv_outline_color);
             new_image.print(this.text, 2, 2, this._inv_text_color);
+            if (this.selected < this.items.length && this.selected != -1) {
+                let text: string = this.items[this.selected].name;
+                let text_length_px: number = text.length * 6;
+                let label_x: number = width - 2 - text_length_px;
+                new_image.print(text, label_x, 2, this._inv_text_color);
+            }
             new_image.drawLine(2, 11, width - 3, 11, this._inv_outline_color);
             for (let index = 0; index < this.max_items; index++) {
                 if (index > this.max_items - 1) {
