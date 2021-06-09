@@ -18,6 +18,15 @@ enum InventoryColorAttribute {
     InventoryText
 }
 
+enum ItemTextAttribute {
+    //% block="name"
+    Name,
+    //% block="description"
+    Description
+}
+
+//% color="#7732B3"
+//% group="['Item', 'Toolbar', 'Inventory']"
 namespace Inventory {
     /**
      * Create a simple item which holds a single image and some text. 
@@ -43,6 +52,46 @@ namespace Inventory {
             this.image = image;
             this.description = description;
         }
+
+        /**
+         * Set the name or description of the item.
+         * @param attribute: A property of the ItemTextAttribute enum.
+         * @param value: The new text of the item.
+         */
+        //% block="%Inventory(Item) set text of %attribute to %value"
+        //% group="Item"
+        set_text(attribute: ItemTextAttribute, value: string) {
+            if (attribute == ItemTextAttribute.Name) {
+                this.name = value;
+            } else if (attribute == ItemTextAttribute.Description) {
+                this.description = value;
+            }
+        }
+
+        /**
+         * Set the image of the item.
+         * @param new_image: The new image.
+         */
+        //% block="%Inventory(Item) set image to %new_image"
+        //% new_image.shadow=screen_image_picker
+        //% group="Item"
+        set_image(new_image: Image) {
+            this.image = new_image;
+        }
+    }
+
+    /**
+     * Create a new item - for blocks.
+     */
+    //% block="create item with name %name and %image || with description %description"
+    //% blockSetVariable=item
+    //% name.dfl="Name"
+    //% image.shadow=screen_image_picker
+    //% expandableArgumentMode="toggle"
+    //% description.dfl="Description"
+    //% group="Item"
+    export function create_item(name: string, image: Image, description: string = null) {
+        return new Item(name, image, description)
     }
 
     /**
