@@ -317,7 +317,32 @@ namespace Inventory {
          * Update the image of the inventory.
          */
         protected update() {
-            // TODO: Implement
+            let image_size: number = 16;
+            let padding: number = 1;
+            let box_size: number = image_size + (padding * 2);
+            let outside_padding: number = 4;
+            let width: number = scene.screenWidth() - (outside_padding * 2);
+            let height: number = scene.screenHeight() - (outside_padding * 2) - 24;
+            let new_image = image.create(width, height);
+            new_image.fill(this._inv_background_color);
+            new_image.drawRect(0, 0, width, height, this._inv_outline_color);
+            new_image.print(this.text, 2, 2, this._inv_text_color);
+            new_image.drawLine(2, 11, width - 3, 11, this._inv_outline_color);
+            for (let index = 0; index < this.max_items; index++) {
+                if (index > this.max_items - 1) {
+                    return;
+                }
+                let x: number = ((index % 8) * box_size) + 4;
+                let y: number = (Math.idiv(index, 8) * box_size) + 14;
+                if (index < this.items.length) {
+                    if (index == this.selected) {
+                        new_image.fillRect(x - 1, y - 1, box_size, box_size, 
+                                           this._inv_selected_outline_color);
+                    }
+                    spriteutils.drawTransparentImage(this.items[index].image, new_image, x, y);
+                }
+            }
+            this.setImage(new_image);
         }
     }
 }

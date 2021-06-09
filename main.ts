@@ -16,7 +16,7 @@ let stuff: Inventory.Item[] = [
         . . 2 e e 2 2 2 2 2 4 4 2 e . .
         . . . 2 2 e e 4 4 4 2 e e . . .
         . . . . . 2 2 e e e e . . . . .
-    `, "A fresh apple picked from the orchird."),
+    `, "A fresh apple picked from the orchird."), 
     new Inventory.Item("Pizza", img`
         . . . . . . b b b b . . . . . .
         . . . . . . b 4 4 4 b . . . . .
@@ -34,7 +34,7 @@ let stuff: Inventory.Item[] = [
         b 5 5 5 5 d d 4 4 4 4 . . . . .
         4 d d d 4 4 4 . . . . . . . . .
         4 4 4 4 . . . . . . . . . . . .
-    `, "Some fresh baked pizza."),
+    `, "Some fresh baked pizza."), 
     new Inventory.Item("Burger", img`
         . . . . c c c b b b b b . . . .
         . . c c b 4 4 4 4 4 4 b b b . .
@@ -54,8 +54,36 @@ let stuff: Inventory.Item[] = [
         . . . c c c c c e e e e e . . .
     `, "A freshly prepared burger hot off the grill.")
 ];
-spriteutils.setConsoleOverlay(true);
 
-let inv = new Inventory.Inventory(stuff, 16);
-inv.left = 2;
-inv.top = 2;
+spriteutils.setConsoleOverlay(true);
+scene.setBackgroundColor(7);
+
+let tb = new Inventory.Toolbar(stuff, 3);
+tb.left = 4;
+tb.bottom = scene.screenHeight() - 4;
+
+let inv_contents: Inventory.Item[] = [];
+for (let i = 0; i < 30; i++) {
+    inv_contents.push(new Inventory.Item("Apple", img`
+        . . . . . . . e c 7 . . . . . .
+        . . . . e e e c 7 7 e e . . . .
+        . . c e e e e c 7 e 2 2 e e . .
+        . c e e e e e c 6 e e 2 2 2 e .
+        . c e e e 2 e c c 2 4 5 4 2 e .
+        c e e e 2 2 2 2 2 2 4 5 5 2 2 e
+        c e e 2 2 2 2 2 2 2 2 4 4 2 2 e
+        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
+        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
+        c e e 2 2 2 2 2 2 2 2 2 2 2 2 e
+        c e e 2 2 2 2 2 2 2 2 2 2 4 2 e
+        . e e e 2 2 2 2 2 2 2 2 2 4 e .
+        . 2 e e 2 2 2 2 2 2 2 2 4 2 e .
+        . . 2 e e 2 2 2 2 2 4 4 2 e . .
+        . . . 2 2 e e 4 4 4 2 e e . . .
+        . . . . . 2 2 e e e e . . . . .
+    `,))
+}
+
+let inv = new Inventory.Inventory(inv_contents, 32);
+inv.left = 4;
+inv.top = 4;
