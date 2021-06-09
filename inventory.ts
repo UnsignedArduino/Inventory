@@ -75,6 +75,7 @@ namespace Inventory {
         //% block="%Inventory(Item) set text of %attribute to %value"
         //% weight=20
         //% group="Item"
+        //% hidden
         set_text(attribute: ItemTextAttribute, value: string) {
             if (attribute == ItemTextAttribute.Name) {
                 this.name = value;
@@ -85,10 +86,12 @@ namespace Inventory {
 
         /**
          * Get the name of description of the item.
+         * @return: The text.
          */
         //% block="%Inventory(Item) get text of %attribute"
         //% weight=10
         //% group="Item"
+        //% hidden
         get_text(attribute: ItemTextAttribute) {
             if (attribute == ItemTextAttribute.Name) {
                 return this.name;
@@ -106,23 +109,27 @@ namespace Inventory {
         //% new_image.shadow=screen_image_picker
         //% weight=40
         //% group="Item"
+        //% hidden
         set_image(new_image: Image) {
             this.image = new_image;
         }
 
         /**
          * Get the image of the item.
+         * @return: The image.
          */
         //% block="%Inventory(Item) get image"
         //% weight=30
         //% group="Item"
+        //% hidden
         get_image() {
             return this.image;
         }
     }
 
     /**
-     * Create a new item - for blocks.
+     * Create a new item - for blocks. Only rewrapped for blocks.
+     * @return: A new Inventory.Item. 
      */
     //% block="create item with name %name and %image || with description %description"
     //% blockSetVariable=item
@@ -132,6 +139,7 @@ namespace Inventory {
     //% description.dfl="Description"
     //% weight=50
     //% group="Item"
+    //% hidden
     export function create_item(name: string, image: Image, description: string = null) {
         return new Item(name, image, description)
     }
@@ -186,10 +194,12 @@ namespace Inventory {
 
         /**
          * Get the items in the toolbar. Only rewrapped for blocks.
+         * @return: The items, as an array of Item.
          */
         //% block="%Inventory(toolbar) get items"
         //% weight=80
         //% group="Toolbar"
+        //% hidden
         public get_items() {
             return this.items;
         }
@@ -209,6 +219,7 @@ namespace Inventory {
         //% new_items.shadow="lists_create_with"
         //% weight=90
         //% group="Toolbar"
+        //% hidden
         public set_items(new_items: Item[]) {
             this.items = new_items;
         }
@@ -230,10 +241,13 @@ namespace Inventory {
 
         /**
          * Set the selected index or max items. Only rewrapped for blocks.
+         * @attribute: A property of the ToolbarNumberAttribute enum.
+         * @value: The new value.
          */
         //% block="%Inventory(toolbar) set %attribute to %value"
         //% weight=70
         //% group="Toolbar"
+        //% hidden
         public set_number(attribute: ToolbarNumberAttribute, value: number) {
             if (attribute == ToolbarNumberAttribute.SelectedIndex) {
                 this.selected = value;
@@ -244,10 +258,13 @@ namespace Inventory {
 
         /**
          * Get the selected index or max items. Only rewrapped for blocks.
+         * @attribute: A property of the ToolbarNumberAttribute enum.
+         * @return: A number. 
          */
         //% block="%Inventory(toolbar) get %attribute"
         //% weight=60
         //% group="Toolbar"
+        //% hidden
         public get_number(attribute: ToolbarNumberAttribute) {
             if (attribute == ToolbarNumberAttribute.SelectedIndex) {
                 return this.selected;
@@ -280,7 +297,7 @@ namespace Inventory {
         /**
          * Get the color of a specific part of the toolbar.
          * @param attribute: A property of the ToolbarColorAttribute enum.
-         * @return: The  color (which is a number) of the attribute, otherwise -1. 
+         * @return: The color (which is a number) of the attribute, otherwise -1. 
          */
         //% block="%Inventory(toolbar) get color of %attribute"
         //% weight=40
@@ -341,6 +358,7 @@ namespace Inventory {
 
     /**
      * Create a new toolbar - for blocks.
+     * @return: A new Toolbar.
      */
     //% block="create toolbar with items %items and max items %max_items"
     //% blockSetVariable=toolbar
@@ -348,6 +366,7 @@ namespace Inventory {
     //% max_items.dfl=3
     //% weight=100
     //% group="Toolbar"
+    //% hidden
     export function create_toolbar(items: Item[], max_items: number) {
         return new Toolbar(items, max_items);
     }
@@ -404,10 +423,12 @@ namespace Inventory {
 
         /**
          * Get the items in the inventory. Only rewrapped for blocks.
+         * @return: The items - as an array of Item. 
          */
-        //% block="%Inventory(Inventory) get items"
+        //% block="%Inventory(inventory) get items"
         //% weight=80
         //% group="Inventory"
+        //% hidden
         public get_items() {
             return this.items;
         }
@@ -420,10 +441,15 @@ namespace Inventory {
             this.update();
         }
 
-        //% block="%Inventory(Inventory) set items to %new_items"
+        /**
+         * Set the items in the inventory. Only rewrapped for blocks.
+         * @new_items: A list of Item.
+         */
+        //% block="%Inventory(inventory) set items to %new_items"
         //% new_items.shadow="lists_create_with"
         //% weight=90
         //% group="Inventory"
+        //% hidden
         public set_items(new_items: Item[]) {
             this.items = new_items;
         }
@@ -445,10 +471,13 @@ namespace Inventory {
 
         /**
          * Set the selected index or max items. Only rewrapped for blocks.
+         * @attribute: A property of the InventoryNumberAttribute enum.
+         * @value: The new number.
          */
-        //% block="%Inventory(Inventory) set %attribute to %value"
+        //% block="%Inventory(inventory) set %attribute to %value"
         //% weight=70
         //% group="Inventory"
+        //% hidden
         public set_number(attribute: InventoryNumberAttribute, value: number) {
             if (attribute == InventoryNumberAttribute.SelectedIndex) {
                 this.selected = value;
@@ -459,10 +488,13 @@ namespace Inventory {
 
         /**
          * Get the selected index or max items. Only rewrapped for blocks.
+         * @attribute: A property of the InventoryNumberAttribute enum.
+         * @return: The number. 
          */
-        //% block="%Inventory(Inventory) get %attribute"
+        //% block="%Inventory(inventory) get %attribute"
         //% weight=60
         //% group="Inventory"
+        //% hidden
         public get_number(attribute: InventoryNumberAttribute) {
             if (attribute == InventoryNumberAttribute.SelectedIndex) {
                 return this.selected;
@@ -481,10 +513,12 @@ namespace Inventory {
 
         /**
          * Get the text in the inventory. Only rewrapped for blocks.
+         * @return: A string. 
          */
-        //% block="%Inventory(Inventory) get text"
+        //% block="%Inventory(inventory) get text"
         //% weight=40
         //% group="Inventory"
+        //% hidden
         public get_text() {
             return this.text;
         }
@@ -499,10 +533,12 @@ namespace Inventory {
 
         /**
          * Set the text in the inventory. Only rewrapped for blocks.
+         * @new_text: The new text. 
          */
-        //% block="%Inventory(Inventory) set text to %new_text"
+        //% block="%Inventory(inventory) set text to %new_text"
         //% weight=50
         //% group="Inventory"
+        //% hidden
         public set_text(new_text: string) {
             this.text = new_text;
         }
@@ -512,7 +548,7 @@ namespace Inventory {
          * @param attribute: A property of the InventoryColorAttribute enum.
          * @param color: A number which should be the new color of the attribute.
          */
-        //% block="%Inventory(Inventory) set color of %attribute to %color"
+        //% block="%Inventory(inventory) set color of %attribute to %color"
         //% color.shadow=colorindexpicker
         //% weight=30
         //% group="Inventory"
@@ -532,9 +568,9 @@ namespace Inventory {
         /**
          * Get the color of a specific part of the inventory.
          * @param attribute: A property of the InventoryColorAttribute enum.
-         * @return: The  color (which is a number) of the attribute, otherwise -1. 
+         * @return: The color (which is a number) of the attribute, otherwise -1. 
          */
-        //% block="%Inventory(Inventory) get color of %attribute"
+        //% block="%Inventory(inventory) get color of %attribute"
         //% weight=20
         //% group="Inventory"
         public get_color(attribute: InventoryColorAttribute) {
@@ -595,6 +631,7 @@ namespace Inventory {
     //% max_items.dfl=3
     //% weight=100
     //% group="Inventory"
+    //% hidden
     export function create_inventory(items: Item[], max_items: number) {
         return new Inventory(items, max_items);
     }
