@@ -1,6 +1,6 @@
 spriteutils.setConsoleOverlay(true)
 scene.setBackgroundColor(7)
-let stuff = [Inventory.create_item("Apple", img`
+let toolbar = Inventory.create_toolbar([Inventory.create_item("Apple", img`
     . . . . . . . e c 7 . . . . . . 
     . . . . e e e c 7 7 e e . . . . 
     . . c e e e e c 7 e 2 2 e e . . 
@@ -51,10 +51,9 @@ let stuff = [Inventory.create_item("Apple", img`
     b 5 5 5 5 d d 4 4 4 4 . . . . . 
     4 d d d 4 4 4 . . . . . . . . . 
     4 4 4 4 . . . . . . . . . . . . 
-    `)]
-let tb = new Inventory.Toolbar(stuff, 3);
-tb.left = 4
-tb.bottom = scene.screenHeight() - 4
+    `)], 3)
+toolbar.left = 4
+toolbar.bottom = scene.screenHeight() - 4
 let inv_contents: Inventory.Item[] = []
 for (let index = 0; index < 30; index++) {
     inv_contents.push(Inventory.create_item("Apple", img`

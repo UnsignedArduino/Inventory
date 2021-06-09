@@ -25,6 +25,13 @@ enum ItemTextAttribute {
     Description
 }
 
+enum ToolbarNumberAttribute {
+    //% block="selected index"
+    SelectedIndex,
+    //% block="max items"
+    MaxItems
+}
+
 //% color="#7732B3"
 //% group="['Item', 'Toolbar', 'Inventory']"
 namespace Inventory {
@@ -59,6 +66,7 @@ namespace Inventory {
          * @param value: The new text of the item.
          */
         //% block="%Inventory(Item) set text of %attribute to %value"
+        //% weight=20
         //% group="Item"
         set_text(attribute: ItemTextAttribute, value: string) {
             if (attribute == ItemTextAttribute.Name) {
@@ -69,14 +77,40 @@ namespace Inventory {
         }
 
         /**
+         * Get the name of description of the item.
+         */
+        //% block="%Inventory(Item) get text of %attribute"
+        //% weight=10
+        //% group="Item"
+        get_text(attribute: ItemTextAttribute) {
+            if (attribute == ItemTextAttribute.Name) {
+                return this.name;
+            } else if (attribute == ItemTextAttribute.Description) {
+                return this.description;
+            }
+            return "";
+        }
+
+        /**
          * Set the image of the item.
          * @param new_image: The new image.
          */
         //% block="%Inventory(Item) set image to %new_image"
         //% new_image.shadow=screen_image_picker
+        //% weight=40
         //% group="Item"
         set_image(new_image: Image) {
             this.image = new_image;
+        }
+
+        /**
+         * Get the image of the item.
+         */
+        //% block="%Inventory(Item) get image"
+        //% weight=30
+        //% group="Item"
+        get_image() {
+            return this.image;
         }
     }
 
@@ -89,6 +123,7 @@ namespace Inventory {
     //% image.shadow=screen_image_picker
     //% expandableArgumentMode="toggle"
     //% description.dfl="Description"
+    //% weight=50
     //% group="Item"
     export function create_item(name: string, image: Image, description: string = null) {
         return new Item(name, image, description)
@@ -143,11 +178,32 @@ namespace Inventory {
         }
 
         /**
+         * Get the items in the toolbar. Only rewrapped for blocks.
+         */
+        //% block="%Inventory(toolbar) get items"
+        //% weight=80
+        //% group="Toolbar"
+        public get_items() {
+            return this.items;
+        }
+
+        /**
          * Set the items in the toolbar.
          */
         public set items(new_items: Item[]) {
             this._items = new_items;
             this.update();
+        }
+
+        /**
+         * Set the items in the toolbar. Only rewrapped for blocks.
+         */
+        //% block="%Inventory(toolbar) set items to %new_items"
+        //% new_items.shadow="lists_create_with"
+        //% weight=90
+        //% group="Toolbar"
+        public set_items(new_items: Item[]) {
+            this.items = new_items;
         }
 
         /**
@@ -166,10 +222,43 @@ namespace Inventory {
         }
 
         /**
+         * Set the selected index or max items. Only rewrapped for blocks.
+         */
+        //% block="%Inventory(toolbar) set %attribute to %value"
+        //% weight=70
+        //% group="Toolbar"
+        public set_number(attribute: ToolbarNumberAttribute, value: number) {
+            if (attribute == ToolbarNumberAttribute.SelectedIndex) {
+                this.selected = value;
+            } else if (attribute == ToolbarNumberAttribute.MaxItems) {
+                this.max_items = value;
+            }
+        }
+
+        /**
+         * Get the selected index or max items. Only rewrapped for blocks.
+         */
+        //% block="%Inventory(toolbar) get %attribute"
+        //% weight=60
+        //% group="Toolbar"
+        public get_number(attribute: ToolbarNumberAttribute) {
+            if (attribute == ToolbarNumberAttribute.SelectedIndex) {
+                return this.selected;
+            } else if (attribute == ToolbarNumberAttribute.MaxItems) {
+                return this.max_items;
+            }
+            return -1;
+        }
+
+        /**
          * Set a specific part of the toolbar to a specific color.
          * @param attribute: A property of the ToolbarColorAttribute enum.
          * @param color: A number which should be the new color of the attribute.
          */
+        //% block="%Inventory(toolbar) set color of %attribute to %color"
+        //% color.shadow=colorindexpicker
+        //% weight=50
+        //% group="Toolbar"
         public set_color(attribute: ToolbarColorAttribute, color: number) {
             if (attribute == ToolbarColorAttribute.BoxOutline) {
                 this._box_outline_color = color;
@@ -186,6 +275,9 @@ namespace Inventory {
          * @param attribute: A property of the ToolbarColorAttribute enum.
          * @return: The  color (which is a number) of the attribute, otherwise -1. 
          */
+        //% block="%Inventory(toolbar) get color of %attribute"
+        //% weight=40
+        //% group="Toolbar"
         public get_color(attribute: ToolbarColorAttribute) {
             if (attribute == ToolbarColorAttribute.BoxOutline) {
                 return this._box_outline_color;
@@ -200,7 +292,9 @@ namespace Inventory {
         /**
          * Update the image of the toolbar.
          */
-        protected update() {
+        //% block="%Inventory(toolbar) force redraw of toolbar"
+        //% weight=30
+        public update() {
             let image_size: number = 16;
             let padding: number = 2;
             let box_size: number = image_size + (padding * 2);
@@ -236,6 +330,19 @@ namespace Inventory {
             }
             this.setImage(new_image);
         }
+    }
+
+    /**
+     * Create a new toolbar - for blocks.
+     */
+    //% block="create toolbar with items %items and max items %max_items"
+    //% blockSetVariable=toolbar
+    //% items.shadow="lists_create_with"
+    //% max_items.dfl=3
+    //% weight=100
+    //% group="Toolbar"
+    export function create_toolbar(items: Item[], max_items: number) {
+        return new Toolbar(items, max_items);
     }
 
     /**
@@ -365,7 +472,7 @@ namespace Inventory {
         /**
          * Update the image of the inventory.
          */
-        protected update() {
+        public update() {
             let image_size: number = 16;
             let padding: number = 1;
             let box_size: number = image_size + (padding * 2);
