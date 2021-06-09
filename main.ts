@@ -75,6 +75,6 @@ for (let index = 0; index < 30; index++) {
         . . . . . 2 2 e e e e . . . . . 
         `))
 }
-let inv = new Inventory.Inventory(inv_contents, 32);
-inv.left = 4
-inv.top = 4
+let inventory = Inventory.create_inventory(inv_contents, 32)
+inventory.top = 4
+inventory.left = 4
