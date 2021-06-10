@@ -22,7 +22,9 @@ enum ItemTextAttribute {
     //% block="name"
     Name,
     //% block="description"
-    Description
+    Description,
+    //% block="tooltip"
+    Tooltip
 }
 
 enum ToolbarNumberAttribute {
@@ -53,6 +55,7 @@ namespace Inventory {
         public name: string;
         public image: Image;
         public description: string;
+        public tooltip: string = ""
 
         /**
          * Make a simple item.
@@ -81,6 +84,8 @@ namespace Inventory {
                 this.name = value;
             } else if (attribute == ItemTextAttribute.Description) {
                 this.description = value;
+            } else if (attribute == ItemTextAttribute.Tooltip) {
+                this.tooltip = value;
             }
         }
 
@@ -97,6 +102,8 @@ namespace Inventory {
                 return this.name;
             } else if (attribute == ItemTextAttribute.Description) {
                 return this.description;
+            } else if (attribute == ItemTextAttribute.Tooltip) {
+                return this.tooltip;
             }
             return "";
         }
@@ -605,9 +612,7 @@ namespace Inventory {
             new_image.print(this.text, 2, 2, this._inv_text_color);
             if (this.selected < this.items.length && this.selected != -1) {
                 let text: string = this.items[this.selected].name;
-                let text_length_px: number = text.length * 6;
-                let label_x: number = width - 2 - text_length_px;
-                new_image.print(text, label_x, 2, this._inv_text_color);
+                this.print_right_aligned(new_image, text, width - 2, 2, this._inv_text_color, false);
             }
             new_image.drawLine(2, 11, width - 3, 11, this._inv_outline_color);
             for (let index = 0; index < this.max_items; index++) {
@@ -622,9 +627,20 @@ namespace Inventory {
                                            this._inv_selected_outline_color);
                     }
                     spriteutils.drawTransparentImage(this.items[index].image, new_image, x, y);
+                    this.print_right_aligned(new_image, this.items[index].tooltip, 
+                                             x + box_size, y + (box_size - 3), this._inv_text_color,
+                                             true);
                 }
             }
             this.setImage(new_image);
+        }
+
+        private print_right_aligned(target: Image, text: string, 
+                                    right: number, y: number, 
+                                    color: number, use_small_font: boolean = false) {
+            let text_length_px: number = text.length * 6;
+            let label_x: number = right - text_length_px;
+            target.print(text, label_x, y, color, use_small_font? image.font5: image.font8);
         }
     }
 
