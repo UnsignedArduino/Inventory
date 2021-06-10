@@ -4,7 +4,9 @@ enum ToolbarColorAttribute {
     //% block="selected outline"
     BoxSelectedOutline,
     //% block="background"
-    BoxBackground
+    BoxBackground,
+    //% block="text"
+    BoxText
 }
 
 enum InventoryColorAttribute {
@@ -164,6 +166,7 @@ namespace Inventory {
         private _box_outline_color: number = 12;
         private _box_selected_outline_color: number = 5;
         private _box_background_color: number = 13;
+        private _box_text_color: number = 12;
 
         /**
          * Make a toolbar.
@@ -297,6 +300,8 @@ namespace Inventory {
                 this._box_selected_outline_color = color;
             } else if (attribute == ToolbarColorAttribute.BoxBackground) {
                 this._box_background_color = color;
+            } else if (attribute == ToolbarColorAttribute.BoxText) {
+                this._box_text_color = color;
             }
             this.update();
         }
@@ -316,6 +321,8 @@ namespace Inventory {
                 return this._box_selected_outline_color;
             } else if (attribute == ToolbarColorAttribute.BoxBackground) {
                 return this._box_background_color;
+            } else if (attribute == ToolbarColorAttribute.BoxText) {
+                return this._box_text_color;
             }
             return -1;
         }
@@ -344,11 +351,10 @@ namespace Inventory {
                     box_size, 
                     this._box_background_color
                 )
+                let x: number = ((box_size + padding) * index) + 2;
+                let y: number = 2;
                 if (index < this.items.length) {
-                    spriteutils.drawTransparentImage(
-                        this.items[index].image, new_image, 
-                        ((box_size + padding) * index) + 2, 2
-                    )
+                    spriteutils.drawTransparentImage(this.items[index].image, new_image, x, y)
                 }
                 new_image.drawRect(
                     (box_size + padding) * index, 
@@ -357,9 +363,30 @@ namespace Inventory {
                     box_size, 
                     index == this.selected ? this._box_selected_outline_color : this._box_outline_color
                 )
-
+                if (index < this.items.length) {
+                    this.print_right_aligned(new_image, this.items[index].tooltip, 
+                            x + box_size - 3, y + (box_size - 5) - 4, this._box_text_color,
+                            true);
+                }
             }
             this.setImage(new_image);
+        }
+
+        /**
+         * Print some text right-aligned
+         * @param target: The image to draw too.
+         * @param text: The text to draw.
+         * @param right: the X coordinate of the right of the text.
+         * @param y: The Y coordinate of the text.
+         * @param color: The color of the text.
+         * @param use_small_font: Whether to use the 5x5 instead of the 5x8 font.
+         */
+        private print_right_aligned(target: Image, text: string, 
+                                    right: number, y: number, 
+                                    color: number, use_small_font: boolean = false) {
+            let text_length_px: number = text.length * 6;
+            let label_x: number = right - text_length_px;
+            target.print(text, label_x, y, color, use_small_font? image.font5: image.font8);
         }
     }
 
@@ -628,13 +655,22 @@ namespace Inventory {
                     }
                     spriteutils.drawTransparentImage(this.items[index].image, new_image, x, y);
                     this.print_right_aligned(new_image, this.items[index].tooltip, 
-                                             x + box_size, y + (box_size - 3), this._inv_text_color,
+                                             x + box_size, y + (box_size - 5) - 1, this._inv_text_color,
                                              true);
                 }
             }
             this.setImage(new_image);
         }
 
+        /**
+         * Print some text right-aligned
+         * @param target: The image to draw too.
+         * @param text: The text to draw.
+         * @param right: the X coordinate of the right of the text.
+         * @param y: The Y coordinate of the text.
+         * @param color: The color of the text.
+         * @param use_small_font: Whether to use the 5x5 instead of the 5x8 font.
+         */
         private print_right_aligned(target: Image, text: string, 
                                     right: number, y: number, 
                                     color: number, use_small_font: boolean = false) {
