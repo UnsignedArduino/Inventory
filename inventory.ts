@@ -267,6 +267,19 @@ namespace Inventory {
         }
 
         /**
+         * Change the selected index or max items. Only rewrapped for blocks.
+         * @attribute: A property of the ToolbarNumberAttribute enum.
+         * @change: The value to change the number by.
+         */
+        //% block="toolbar %Inventory(toolbar) change %attribute by %change"
+        //% weight=65
+        //% group="Toolbar"
+        //% hidden
+        public change_number(attribute: ToolbarNumberAttribute, change: number) {
+            this.set_number(attribute, this.get_number(attribute) + change);
+        }
+
+        /**
          * Get the selected index or max items. Only rewrapped for blocks.
          * @attribute: A property of the ToolbarNumberAttribute enum.
          * @return: A number. 
@@ -518,6 +531,19 @@ namespace Inventory {
             } else if (attribute == InventoryNumberAttribute.MaxItems) {
                 this.max_items = value;
             }
+        }
+
+        /**
+         * Change the selected index or max items. Only rewrapped for blocks.
+         * @attribute: A property of the InventoryNumberAttribute enum.
+         * @change: The value to change the number by.
+         */
+        //% block="inventory %Inventory(inventory) change %attribute by %change"
+        //% weight=65
+        //% group="Inventory"
+        //% hidden
+        public change_number(attribute: InventoryNumberAttribute, change: number) {
+            this.set_number(attribute, this.get_number(attribute) + change);
         }
 
         /**
